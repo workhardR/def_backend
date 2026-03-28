@@ -241,6 +241,10 @@ function computeAchievements(done, scores, avg) {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+fetch("https://def-backend.onrender.com/api/courses")
+  .then(res => res.json())
+  .then(data => console.log("DATA:", data))
+  .catch(err => console.error(err));
 
 app.listen(PORT, () => {
   console.log(`\n⚡ DEFTECH Server running at http://localhost:${PORT}`);
