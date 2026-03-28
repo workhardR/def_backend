@@ -1415,6 +1415,23 @@ function renderDashboard(){
 function checkAchievements(){
 
 }
+async function loadCourses() {
+  try {
+    const res = await fetch("https://def-backend.onrender.com/api/courses");
+    const data = await res.json();
+
+    COURSES = data.courses;  // overwrite existing data
+
+    renderCourses();
+    renderHomeCourses(); // remove if you don’t have this
+  } catch (err) {
+    console.error("Failed to load courses", err);
+  }
+}
+window.onload = () => {
+  loadCourses();
+};
+
 
 
 renderHomePreview();
