@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DEFTECH – India Defence Education & Technology Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ─── ROOT VARIABLES ─────────────────────────────── */
+:root{
+  --bg:#040d0a;
+  --bg2:#071210;
+  --bg3:#0a1a16;
+  --panel:#0d2219;
+  --panel2:#102820;
+  --border:#1a4a30;
+  --border2:#1f5a38;
+  --green:#00ff88;
+  --green2:#00cc66;
+  --green3:#00ff44;
+  --green-dim:#00994d;
+  --green-glow:rgba(0,255,136,.18);
+  --green-glow2:rgba(0,255,136,.08);
+  --text:#e8f5ee;
+  --text2:#a8c4b4;
+  --text3:#5a8a6a;
+  --red:#ff3355;
+  --amber:#ffaa00;
+  --cyan:#00eeff;
+  --font-display:'Orbitron',sans-serif;
+  --font-mono:'Share Tech Mono',monospace;
+  --font-body:'Exo 2',sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-body);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ─── SCROLLBAR ──────────────────────────────────── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--green-dim);border-radius:3px}
+
+/* ─── GLOBAL GRID BACKGROUND ─────────────────────── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(0,255,136,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,136,.03) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;z-index:0;
+}
+
+/* ─── PAGES ──────────────────────────────────────── */
+.page{display:none;position:relative;z-index:1;min-height:100vh}
+.page.active{display:block}
+
+/* ─── NAV ────────────────────────────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(4,13,10,.92);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(16px);
+  padding:0 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.nav-brand{
+  display:flex;align-items:center;gap:.75rem;
+  font-family:var(--font-display);font-weight:900;font-size:1.1rem;
+  color:var(--green);letter-spacing:.08em;
+  cursor:pointer;
+}
+.nav-brand span{
+  width:36px;height:36px;border:2px solid var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;clip-path:polygon(12% 0%,88% 0%,100% 12%,100% 88%,88% 100%,12% 100%,0% 88%,0% 12%);
+  background:var(--green-glow2);
+}
+.nav-links{display:flex;align-items:center;gap:.25rem}
+.nav-links a{
+  font-family:var(--font-display);font-size:.65rem;font-weight:600;
+  letter-spacing:.12em;color:var(--text2);
+  padding:.5rem .85rem;border-radius:4px;
+  border:1px solid transparent;
+  transition:all .25s;cursor:pointer;text-transform:uppercase;
+}
+.nav-links a:hover,.nav-links a.active{
+  color:var(--green);border-color:var(--border);
+  background:var(--green-glow2);
+}
+.nav-links a.nav-logout{
+  color:var(--red);
+}
+.nav-links a.nav-logout:hover{
+  border-color:rgba(255,51,85,.3);background:rgba(255,51,85,.08);
+}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.5rem}
+.hamburger span{width:24px;height:2px;background:var(--green);transition:.3s}
+
+/* ─── HERO ───────────────────────────────────────── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:6rem 2rem 4rem;
+  position:relative;overflow:hidden;
+}
+.hero-badge{
+  font-family:var(--font-mono);font-size:.7rem;
+  color:var(--green);border:1px solid var(--border2);
+  padding:.35rem 1rem;border-radius:2px;
+  background:var(--green-glow2);letter-spacing:.2em;
+  margin-bottom:2rem;display:inline-flex;align-items:center;gap:.5rem;
+  animation:fadeUp .8s both;
+}
+.hero-badge::before{content:'▶';font-size:.5rem}
+.hero-title{
+  font-family:var(--font-display);font-size:clamp(2rem,6vw,4.5rem);
+  font-weight:900;line-height:1.05;
+  color:var(--text);letter-spacing:-.01em;
+  margin-bottom:1.5rem;
+  animation:fadeUp .8s .1s both;
+}
+.hero-title .accent{color:var(--green);text-shadow:0 0 40px rgba(0,255,136,.5)}
+.hero-title .dim{color:var(--text3)}
+.hero-tagline{
+  font-size:1.05rem;color:var(--text2);max-width:680px;
+  line-height:1.75;margin-bottom:3rem;
+  animation:fadeUp .8s .2s both;
+}
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeUp .8s .3s both}
+.btn-primary{
+  font-family:var(--font-display);font-size:.7rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:.85rem 2rem;
+  background:var(--green);color:#020a06;
+  border:none;border-radius:3px;cursor:pointer;
+  clip-path:polygon(8px 0%,100% 0%,100% calc(100% - 8px),calc(100% - 8px) 100%,0% 100%,0% 8px);
+  transition:all .2s;position:relative;
+  box-shadow:0 0 24px rgba(0,255,136,.35);
+}
+.btn-primary:hover{background:var(--green3);box-shadow:0 0 40px rgba(0,255,136,.6);transform:translateY(-2px)}
+.btn-secondary{
+  font-family:var(--font-display);font-size:.7rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:.85rem 2rem;
+  background:transparent;color:var(--green);
+  border:1px solid var(--green-dim);border-radius:3px;cursor:pointer;
+  transition:all .2s;
+}
+.btn-secondary:hover{background:var(--green-glow);border-color:var(--green);transform:translateY(-2px)}
+
+/* Hero decorative */
+.hero-stats{
+  display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;
+  margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border);
+  animation:fadeUp .8s .4s both;
+}
+.stat{text-align:center}
+.stat-num{
+  font-family:var(--font-display);font-size:1.8rem;font-weight:900;
+  color:var(--green);
+}
+.stat-label{font-family:var(--font-mono);font-size:.65rem;color:var(--text3);letter-spacing:.15em;margin-top:.25rem}
+
+/* floating orbs */
+.orb{
+  position:absolute;border-radius:50%;pointer-events:none;
+  animation:pulse-orb 6s ease-in-out infinite;
+}
+.orb1{width:400px;height:400px;top:-100px;right:-100px;
+  background:radial-gradient(circle,rgba(0,255,136,.06),transparent 70%);animation-delay:0s}
+.orb2{width:300px;height:300px;bottom:50px;left:-80px;
+  background:radial-gradient(circle,rgba(0,238,255,.05),transparent 70%);animation-delay:-3s}
+
+/* ─── SECTION SHARED ─────────────────────────────── */
+section{padding:5rem 2rem}
+.container{max-width:1200px;margin:0 auto}
+.section-label{
+  font-family:var(--font-mono);font-size:.65rem;letter-spacing:.25em;
+  color:var(--green-dim);text-transform:uppercase;margin-bottom:.75rem;
+  display:flex;align-items:center;gap:.5rem;
+}
+.section-label::before{content:'';display:block;width:24px;height:1px;background:var(--green-dim)}
+.section-title{
+  font-family:var(--font-display);font-size:clamp(1.5rem,3.5vw,2.5rem);
+  font-weight:700;margin-bottom:1rem;
+}
+.section-sub{color:var(--text2);font-size:.95rem;line-height:1.7;max-width:600px}
+
+/* ─── FEATURES SECTION ───────────────────────────── */
+.features-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.5rem;margin-top:3.5rem;
+}
+.feature-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:6px;padding:2rem;
+  position:relative;overflow:hidden;
+  transition:all .3s;cursor:default;
+}
+.feature-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--green-glow2),transparent);
+  opacity:0;transition:.3s;
+}
+.feature-card:hover{border-color:var(--border2);transform:translateY(-4px);
+  box-shadow:0 8px 32px rgba(0,255,136,.08)}
+.feature-card:hover::before{opacity:1}
+.feature-icon{
+  width:48px;height:48px;
+  background:var(--green-glow);
+  border:1px solid var(--border2);
+  border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;margin-bottom:1.25rem;
+}
+.feature-title{
+  font-family:var(--font-display);font-size:.85rem;font-weight:700;
+  letter-spacing:.06em;color:var(--green);margin-bottom:.75rem;
+}
+.feature-desc{font-size:.88rem;color:var(--text2);line-height:1.7}
+.feature-tag{
+  margin-top:1.25rem;display:inline-block;
+  font-family:var(--font-mono);font-size:.6rem;
+  color:var(--green-dim);letter-spacing:.15em;
+  padding:.25rem .6rem;border:1px solid var(--border);border-radius:2px;
+}
+
+/* ─── COURSES PAGE ───────────────────────────────── */
+.page-header{
+  background:linear-gradient(180deg,var(--bg2),var(--bg));
+  border-bottom:1px solid var(--border);
+  padding:3rem 2rem;
+}
+.page-header .container{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.filter-bar{
+  display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem;
+}
+.filter-btn{
+  font-family:var(--font-mono);font-size:.65rem;
+  letter-spacing:.1em;padding:.4rem .9rem;
+  border:1px solid var(--border);border-radius:20px;
+  background:transparent;color:var(--text3);cursor:pointer;transition:.2s;
+}
+.filter-btn:hover,.filter-btn.active{
+  border-color:var(--green-dim);color:var(--green);background:var(--green-glow2);
+}
+.search-box{
+  display:flex;align-items:center;gap:.5rem;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:4px;padding:.5rem 1rem;
+}
+.search-box input{
+  background:transparent;border:none;outline:none;
+  color:var(--text);font-family:var(--font-mono);font-size:.8rem;width:200px;
+}
+.search-box input::placeholder{color:var(--text3)}
+.search-icon{color:var(--text3);font-size:.9rem}
+
+.courses-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:1.5rem;margin-top:2.5rem;
+}
+.course-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:6px;overflow:hidden;transition:.3s;cursor:pointer;
+  display:flex;flex-direction:column;
+}
+.course-card:hover{border-color:var(--border2);transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(0,255,136,.1)}
+.course-card-banner{
+  height:120px;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;
+}
+.course-card-body{padding:1.5rem;flex:1;display:flex;flex-direction:column}
+.course-category{
+  font-family:var(--font-mono);font-size:.6rem;letter-spacing:.2em;
+  color:var(--green-dim);text-transform:uppercase;margin-bottom:.5rem;
+}
+.course-title{
+  font-family:var(--font-display);font-size:.95rem;font-weight:700;
+  color:var(--text);margin-bottom:.75rem;line-height:1.4;
+}
+.course-desc{font-size:.82rem;color:var(--text2);line-height:1.65;flex:1;margin-bottom:1.25rem}
+.course-meta{
+  display:flex;gap:1rem;flex-wrap:wrap;padding-top:1rem;
+  border-top:1px solid var(--border);
+}
+.meta-item{
+  display:flex;align-items:center;gap:.35rem;
+  font-family:var(--font-mono);font-size:.65rem;color:var(--text3);
+}
+.meta-item span:first-child{font-size:.8rem}
+.difficulty{
+  display:inline-flex;align-items:center;gap:.3rem;
+  font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;
+  padding:.2rem .6rem;border-radius:20px;
+}
+.diff-beginner{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.2)}
+.diff-intermediate{background:rgba(255,170,0,.1);color:var(--amber);border:1px solid rgba(255,170,0,.2)}
+.diff-advanced{background:rgba(0,238,255,.1);color:var(--cyan);border:1px solid rgba(0,238,255,.2)}
+
+/* ─── COURSE DETAIL PAGE ─────────────────────────── */
+.course-detail-header{
+  background:linear-gradient(135deg,var(--panel),var(--bg));
+  border-bottom:1px solid var(--border);
+  padding:3rem 2rem;
+}
+.back-btn{
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;
+  color:var(--text3);background:transparent;border:none;cursor:pointer;
+  display:flex;align-items:center;gap:.5rem;padding:0;
+  margin-bottom:1.5rem;transition:.2s;
+}
+.back-btn:hover{color:var(--green)}
+.course-detail-layout{display:grid;grid-template-columns:1fr 320px;gap:2rem;align-items:start}
+.course-info-badge{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem}
+.course-detail-title{
+  font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);
+  font-weight:900;margin-bottom:.75rem;line-height:1.2;
+}
+.course-detail-desc{color:var(--text2);line-height:1.75;font-size:.92rem}
+.course-sidebar{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:6px;padding:1.5rem;position:sticky;top:80px;
+}
+.sidebar-stat{display:flex;justify-content:space-between;align-items:center;
+  padding:.75rem 0;border-bottom:1px solid var(--border);font-size:.85rem}
+.sidebar-stat:last-of-type{border-bottom:none}
+.sidebar-stat-label{color:var(--text3);font-family:var(--font-mono);font-size:.65rem;letter-spacing:.1em}
+.sidebar-stat-val{color:var(--text);font-weight:600}
+.start-btn{
+  width:100%;margin-top:1.25rem;
+  font-family:var(--font-display);font-size:.7rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;padding:.9rem;
+  background:var(--green);color:#020a06;border:none;border-radius:3px;
+  cursor:pointer;transition:.2s;
+  box-shadow:0 0 20px rgba(0,255,136,.3);
+}
+.start-btn:hover{background:var(--green3);box-shadow:0 0 36px rgba(0,255,136,.5)}
+
+/* modules list */
+.modules-section{padding:3rem 2rem}
+.module-list{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+.module-item{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:6px;padding:1.25rem 1.5rem;
+  display:flex;align-items:center;gap:1rem;
+  transition:.2s;cursor:pointer;
+}
+.module-item:hover{border-color:var(--border2);background:var(--panel2)}
+.module-num{
+  width:36px;height:36px;flex-shrink:0;
+  background:var(--green-glow2);border:1px solid var(--border2);
+  border-radius:4px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:.7rem;font-weight:700;color:var(--green);
+}
+.module-info{flex:1}
+.module-title{font-weight:600;font-size:.9rem;margin-bottom:.25rem}
+.module-sub{font-family:var(--font-mono);font-size:.65rem;color:var(--text3)}
+.module-status{
+  font-size:.75rem;padding:.25rem .6rem;border-radius:20px;
+  font-family:var(--font-mono);
+}
+.status-locked{background:rgba(90,138,106,.1);color:var(--text3);border:1px solid var(--border)}
+.status-complete{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.2)}
+.status-active{background:rgba(255,170,0,.1);color:var(--amber);border:1px solid rgba(255,170,0,.2)}
+
+/* quiz section */
+.quiz-cta-box{
+  background:linear-gradient(135deg,var(--panel),rgba(0,255,136,.05));
+  border:1px solid var(--border2);border-radius:8px;
+  padding:2.5rem;text-align:center;margin-top:2rem;
+}
+.quiz-cta-box h3{
+  font-family:var(--font-display);font-size:1.2rem;font-weight:700;
+  color:var(--green);margin-bottom:.75rem;
+}
+
+/* ─── QUIZ PAGE ──────────────────────────────────── */
+.quiz-wrapper{max-width:720px;margin:0 auto;padding:3rem 2rem}
+.quiz-header{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:6px;padding:1.25rem 1.5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:2rem;flex-wrap:wrap;gap:1rem;
+}
+.quiz-progress-bar{
+  height:4px;background:var(--border);border-radius:2px;
+  margin-top:.75rem;overflow:hidden;
+}
+.quiz-progress-fill{
+  height:100%;background:var(--green);
+  border-radius:2px;transition:width .4s;
+  box-shadow:0 0 8px rgba(0,255,136,.5);
+}
+.question-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;padding:2rem;
+  animation:fadeUp .4s both;
+}
+.question-num{
+  font-family:var(--font-mono);font-size:.65rem;letter-spacing:.2em;
+  color:var(--green-dim);margin-bottom:1rem;
+}
+.question-text{
+  font-size:1.05rem;font-weight:500;line-height:1.65;margin-bottom:1.75rem;
+  color:var(--text);
+}
+.options{display:flex;flex-direction:column;gap:.75rem}
+.option{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:5px;padding:1rem 1.25rem;
+  cursor:pointer;transition:.2s;
+  display:flex;align-items:center;gap:.75rem;
+  font-size:.9rem;color:var(--text2);
+}
+.option:hover:not(.disabled){border-color:var(--border2);color:var(--text);background:var(--panel)}
+.option.selected{border-color:var(--green-dim);color:var(--text);background:rgba(0,255,136,.07)}
+.option.correct{border-color:var(--green);background:rgba(0,255,136,.1);color:var(--green)}
+.option.wrong{border-color:var(--red);background:rgba(255,51,85,.08);color:var(--red)}
+.option.disabled{cursor:default}
+.option-letter{
+  width:28px;height:28px;flex-shrink:0;
+  border:1px solid currentColor;border-radius:3px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:.65rem;font-weight:700;
+}
+.feedback-box{
+  margin-top:1.25rem;padding:1rem 1.25rem;
+  border-radius:5px;font-size:.85rem;line-height:1.6;
+  animation:fadeUp .3s both;
+}
+.feedback-correct{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);color:var(--green)}
+.feedback-wrong{background:rgba(255,51,85,.06);border:1px solid rgba(255,51,85,.15);color:#ff8099}
+.quiz-nav{display:flex;justify-content:flex-end;margin-top:1.5rem}
+
+/* score card */
+.score-card{
+  background:var(--panel);border:1px solid var(--border2);
+  border-radius:10px;padding:3rem 2rem;text-align:center;
+  max-width:520px;margin:0 auto;
+}
+.score-circle{
+  width:120px;height:120px;border-radius:50%;
+  border:3px solid var(--green);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin:1.5rem auto;
+  background:radial-gradient(circle,rgba(0,255,136,.1),transparent);
+  box-shadow:0 0 40px rgba(0,255,136,.2);
+}
+.score-num{font-family:var(--font-display);font-size:2rem;font-weight:900;color:var(--green)}
+.score-label{font-family:var(--font-mono);font-size:.6rem;color:var(--text3);letter-spacing:.15em}
+.score-badges{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin:1.5rem 0}
+.badge{
+  padding:.4rem 1rem;border-radius:20px;
+  font-family:var(--font-mono);font-size:.65rem;letter-spacing:.1em;
+}
+.badge-gold{background:rgba(255,170,0,.15);color:var(--amber);border:1px solid rgba(255,170,0,.3)}
+.badge-green{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.2)}
+.badge-cyan{background:rgba(0,238,255,.1);color:var(--cyan);border:1px solid rgba(0,238,255,.2)}
+
+/* ─── DASHBOARD PAGE ─────────────────────────────── */
+.dashboard-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1.25rem;margin-bottom:2.5rem;
+}
+.dash-stat-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:6px;padding:1.5rem;
+  border-left:3px solid var(--green);
+}
+.dash-stat-num{
+  font-family:var(--font-display);font-size:2rem;font-weight:900;
+  color:var(--green);margin-bottom:.25rem;
+}
+.dash-stat-label{font-family:var(--font-mono);font-size:.65rem;color:var(--text3);letter-spacing:.1em}
+.dash-two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.dash-panel{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:6px;padding:1.5rem;
+}
+.dash-panel h3{
+  font-family:var(--font-display);font-size:.75rem;font-weight:700;
+  letter-spacing:.1em;color:var(--green);margin-bottom:1.25rem;
+  text-transform:uppercase;
+}
+.progress-row{margin-bottom:1rem}
+.progress-row-header{display:flex;justify-content:space-between;margin-bottom:.35rem;font-size:.82rem}
+.progress-row-header span:last-child{font-family:var(--font-mono);font-size:.7rem;color:var(--text3)}
+.progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green2),var(--green));
+  box-shadow:0 0 6px rgba(0,255,136,.4)}
+.quiz-history-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.75rem 0;border-bottom:1px solid var(--border);font-size:.83rem;
+}
+.quiz-history-row:last-child{border-bottom:none}
+.quiz-history-score{
+  font-family:var(--font-display);font-size:.85rem;font-weight:700;color:var(--green);
+}
+.achievement-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.75rem;margin-top:1rem}
+.achievement{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:6px;padding:.75rem;text-align:center;
+  font-size:1.5rem;
+}
+.achievement p{font-family:var(--font-mono);font-size:.6rem;color:var(--text3);margin-top:.35rem;letter-spacing:.05em}
+.achievement.locked{filter:grayscale(1);opacity:.4}
+
+/* ─── ABOUT PAGE ─────────────────────────────────── */
+.about-content{max-width:800px}
+.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:3rem}
+.about-card{
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:6px;padding:1.5rem;
+}
+.about-card h3{font-family:var(--font-display);font-size:.8rem;font-weight:700;
+  color:var(--green);letter-spacing:.08em;margin-bottom:.75rem}
+.about-card p{font-size:.83rem;color:var(--text2);line-height:1.7}
+.timeline{margin-top:2.5rem}
+.timeline-item{
+  display:flex;gap:1.5rem;padding-bottom:2rem;
+  position:relative;
+}
+.timeline-item::before{
+  content:'';position:absolute;left:19px;top:40px;bottom:0;
+  width:1px;background:var(--border);
+}
+.timeline-item:last-child::before{display:none}
+.timeline-dot{
+  width:40px;height:40px;flex-shrink:0;
+  background:var(--panel);border:2px solid var(--border2);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
+}
+.timeline-content h4{font-family:var(--font-display);font-size:.8rem;font-weight:700;
+  color:var(--text);margin-bottom:.35rem}
+.timeline-content p{font-size:.83rem;color:var(--text2);line-height:1.6}
+.timeline-year{font-family:var(--font-mono);font-size:.65rem;color:var(--green-dim);margin-bottom:.25rem}
+
+/* ─── FOOTER ─────────────────────────────────────── */
+footer{
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:3rem 2rem;margin-top:4rem;
+}
+.footer-inner{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;
+}
+.footer-brand{font-family:var(--font-display);font-size:1.1rem;font-weight:900;color:var(--green);margin-bottom:.75rem}
+.footer-desc{font-size:.83rem;color:var(--text3);line-height:1.7}
+.footer-col h4{font-family:var(--font-display);font-size:.7rem;font-weight:700;
+  letter-spacing:.1em;color:var(--text2);text-transform:uppercase;margin-bottom:1rem}
+.footer-col a{
+  display:block;font-size:.82rem;color:var(--text3);
+  cursor:pointer;margin-bottom:.5rem;transition:.2s;
+}
+.footer-col a:hover{color:var(--green)}
+.footer-bottom{
+  border-top:1px solid var(--border);margin-top:2.5rem;padding-top:1.5rem;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+  font-family:var(--font-mono);font-size:.65rem;color:var(--text3);
+}
+.footer-status{display:flex;align-items:center;gap:.5rem}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 6px var(--green);animation:blink 2s infinite}
+
+/* ─── ANIMATIONS ─────────────────────────────────── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes pulse-orb{
+  0%,100%{transform:scale(1);opacity:.8}
+  50%{transform:scale(1.1);opacity:1}
+}
+@keyframes blink{
+  0%,100%{opacity:1}50%{opacity:.3}
+}
+@keyframes scanline{
+  0%{transform:translateY(-100%)}
+  100%{transform:translateY(100vh)}
+}
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────── */
+@media(max-width:900px){
+  .course-detail-layout{grid-template-columns:1fr}
+  .course-sidebar{position:static}
+  .dash-two-col{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .nav-links.open{
+    display:flex;flex-direction:column;
+    position:fixed;top:64px;left:0;right:0;
+    background:rgba(4,13,10,.98);border-bottom:1px solid var(--border);
+    padding:1rem;z-index:99;
+  }
+  .hamburger{display:flex}
+  .footer-inner{grid-template-columns:1fr}
+  .hero-stats{gap:1.5rem}
+}
+
+/* ─── UTILITY ────────────────────────────────────── */
+.text-green{color:var(--green)}
+.text-amber{color:var(--amber)}
+.text-cyan{color:var(--cyan)}
+.text-dim{color:var(--text3)}
+.text-mono{font-family:var(--font-mono)}
+.hidden{display:none!important}
+.mt1{margin-top:1rem}.mt2{margin-top:2rem}
+.flex{display:flex}.gap1{gap:1rem}.aic{align-items:center}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════ -->
+<nav id="main-nav">
+  <div class="nav-brand" onclick="goPage('home')">
+    <span>DT</span>
+    DEFTECH
+  </div>
+  <div class="nav-links" id="nav-links">
+    <a onclick="goPage('home')" data-page="home">Home</a>
+    <a onclick="goPage('about')" data-page="about">About</a>
+    <a onclick="goPage('courses')" data-page="courses">Courses</a>
+    <a onclick="goPage('dashboard')" data-page="dashboard">Dashboard</a>
+    <a onclick="logout()" class="nav-logout">Logout</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ═══ HOME PAGE ═══════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="hero-badge">India's Premier Defence Education Platform</div>
+    <h1 class="hero-title">
+      <span class="accent">DEFTECH</span><br/>
+      <span class="dim">Educational Portal</span><br/>
+      Defence Education &amp; Technology
+    </h1>
+    <p class="hero-tagline">
+      Explore India's defence technology, DRDO research, missile systems, radar technology,
+      and military innovation through structured modules, interactive quizzes, and real-time progress tracking.
+    </p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="goPage('courses')">⚡ Explore Courses</button>
+      <button class="btn-secondary" onclick="goPage('about')">Learn More →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num" id="stat-courses">5</div><div class="stat-label">Courses</div></div>
+      <div class="stat"><div class="stat-num" id="stat-modules">19</div><div class="stat-label">Modules</div></div>
+      <div class="stat"><div class="stat-num" id="stat-quizzes">25+</div><div class="stat-label">Quiz Questions</div></div>
+      <div class="stat"><div class="stat-num">DRDO</div><div class="stat-label">Research Coverage</div></div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="container">
+      <div class="section-label">Platform Features</div>
+      <h2 class="section-title">Everything You Need to Master<br/><span class="text-green">Defence Technology</span></h2>
+      <p class="section-sub">A comprehensive learning ecosystem built specifically for India's defence education landscape.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📚</div>
+          <div class="feature-title">Structured Learning</div>
+          <p class="feature-desc">Comprehensive modules on defence technology, DRDO research, weapons systems, and strategic doctrine — organized by topic and difficulty level.</p>
+          <span class="feature-tag">19 MODULES AVAILABLE</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <div class="feature-title">Interactive Quizzes</div>
+          <p class="feature-desc">MCQs with instant feedback and detailed explanations after each question. Reinforce your knowledge and identify gaps in understanding.</p>
+          <span class="feature-tag">25+ QUESTIONS</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <div class="feature-title">Progress Tracking</div>
+          <p class="feature-desc">Real-time dashboard showing modules completed, quiz scores, completion percentages, and earned achievements across all courses.</p>
+          <span class="feature-tag">LIVE DASHBOARD</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🏆</div>
+          <div class="feature-title">Gamification & Badges</div>
+          <p class="feature-desc">Earn achievement badges for completing modules and scoring high on quizzes. Level up your profile and track milestones.</p>
+          <span class="feature-tag">8 ACHIEVEMENTS</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <div class="feature-title">Search & Filter</div>
+          <p class="feature-desc">Find courses instantly by category, difficulty level, or duration. Tailored navigation for every learner's pace and interest.</p>
+          <span class="feature-tag">SMART FILTERING</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-title">India-Focused Content</div>
+          <p class="feature-desc">Content curated specifically for India's defence ecosystem — DRDO, Agni, BrahMos, AESA radar, and future tech like AMCA & FINSAS.</p>
+          <span class="feature-tag">INDIA-SPECIFIC</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Courses Preview -->
+  <section>
+    <div class="container">
+      <div class="section-label">Featured Courses</div>
+      <h2 class="section-title">Start Learning <span class="text-green">Today</span></h2>
+      <div class="courses-grid" id="home-courses-preview"></div>
+      <div style="text-align:center;margin-top:2.5rem">
+        <button class="btn-primary" onclick="goPage('courses')">View All Courses →</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">⚡ DEFTECH</div>
+        <p class="footer-desc">India's premier online portal for defence education and technology. Bridging the gap between military knowledge and civilian understanding.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a onclick="goPage('home')">Home</a>
+        <a onclick="goPage('about')">About</a>
+        <a onclick="goPage('courses')">Courses</a>
+        <a onclick="goPage('dashboard')">Dashboard</a>
+      </div>
+      <div class="footer-col">
+        <h4>Topics</h4>
+        <a>DRDO Research</a>
+        <a>Missile Systems</a>
+        <a>Radar Technology</a>
+        <a>Military Strategy</a>
+      </div>
+    </div>
+    <div class="footer-bottom" style="max-width:1200px;margin:0 auto">
+      <span>© 2028 DefTech Learning Portal. Educational purposes only.</span>
+      <div class="footer-status"><span class="status-dot"></span>All Systems Operational</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══ COURSES PAGE ════════════════════════════════════════ -->
+<div class="page" id="page-courses">
+  <div class="page-header">
+    <div class="container">
+      <div>
+        <div class="section-label">Course Catalog</div>
+        <h1 class="section-title">All <span class="text-green">Courses</span></h1>
+        <p class="section-sub">Structured modules covering India's defence ecosystem from ground up.</p>
+        <div class="filter-bar" id="filter-bar">
+          <button class="filter-btn active" onclick="filterCourses('all',this)">All</button>
+          <button class="filter-btn" onclick="filterCourses('Beginner',this)">Beginner</button>
+          <button class="filter-btn" onclick="filterCourses('Intermediate',this)">Intermediate</button>
+          <button class="filter-btn" onclick="filterCourses('Advanced',this)">Advanced</button>
+          <button class="filter-btn" onclick="filterCourses('Defence Basics',this)">Defence Basics</button>
+          <button class="filter-btn" onclick="filterCourses('Space & Missiles',this)">Missiles</button>
+          <button class="filter-btn" onclick="filterCourses('Electronics',this)">Electronics</button>
+        </div>
+      </div>
+      <div>
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" placeholder="Search courses..." id="course-search" oninput="searchCourses(this.value)"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="padding:2.5rem 2rem">
+    <div class="courses-grid" id="courses-grid"></div>
+  </div>
+</div>
+
+<!-- ═══ COURSE DETAIL PAGE ═════════════════════════════════ -->
+<div class="page" id="page-course-detail">
+  <div class="course-detail-header">
+    <div class="container">
+      <button class="back-btn" onclick="goPage('courses')">← Back to Courses</button>
+      <div class="course-detail-layout">
+        <div>
+          <div class="course-info-badge" id="detail-badges"></div>
+          <h1 class="course-detail-title" id="detail-title"></h1>
+          <p class="course-detail-desc" id="detail-desc"></p>
+        </div>
+        <div class="course-sidebar">
+          <div id="detail-sidebar-stats"></div>
+          <button class="start-btn" id="detail-start-btn" onclick="startQuiz()">▶ Start Quiz</button>
+          <button class="btn-secondary" style="width:100%;margin-top:.75rem" onclick="goPage('dashboard')">View Progress →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modules-section">
+    <div class="container">
+      <div class="section-label">Course Content</div>
+      <h2 class="section-title">Module <span class="text-green">Breakdown</span></h2>
+      <div class="module-list" id="module-list"></div>
+      <div class="quiz-cta-box mt2">
+        <h3>🎯 Ready to Test Your Knowledge?</h3>
+        <p style="color:var(--text2);margin-bottom:1.25rem;font-size:.9rem">
+          Take the quiz for this course and track your score in your dashboard.
+        </p>
+        <button class="btn-primary" onclick="startQuiz()">Start Quiz Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ QUIZ PAGE ═══════════════════════════════════════════ -->
+<div class="page" id="page-quiz">
+  <div class="quiz-wrapper">
+    <div class="quiz-header">
+      <div>
+        <div class="text-mono" style="font-size:.65rem;color:var(--text3);letter-spacing:.15em">QUIZ IN PROGRESS</div>
+        <div style="font-family:var(--font-display);font-weight:700;font-size:.9rem" id="quiz-course-title"></div>
+      </div>
+      <div style="text-align:right">
+        <div class="text-mono" style="font-size:.65rem;color:var(--text3)">Question</div>
+        <div style="font-family:var(--font-display);font-weight:700;color:var(--green)" id="quiz-counter"></div>
+      </div>
+    </div>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-progress-fill"></div></div>
+    <div style="margin-top:2rem" id="quiz-content"></div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD PAGE ══════════════════════════════════════ -->
+<div class="page" id="page-dashboard">
+  <div class="page-header">
+    <div class="container">
+      <div class="section-label">Your Learning Hub</div>
+      <h1 class="section-title">Dashboard <span class="text-green">Overview</span></h1>
+    </div>
+  </div>
+  <div class="container" style="padding:2.5rem 2rem">
+    <div class="dashboard-grid" id="dash-stats"></div>
+    <div class="dash-two-col">
+      <div class="dash-panel">
+        <h3>📈 Course Progress</h3>
+        <div id="dash-progress"></div>
+      </div>
+      <div class="dash-panel">
+        <h3>📝 Quiz History</h3>
+        <div id="dash-quiz-history"></div>
+      </div>
+    </div>
+    <div class="dash-panel mt2">
+      <h3>🏆 Achievements</h3>
+      <div class="achievement-grid" id="dash-achievements"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ABOUT PAGE ══════════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="page-header">
+    <div class="container">
+      <div class="section-label">About DEFTECH</div>
+      <h1 class="section-title">India's <span class="text-green">Defence Knowledge</span> Platform</h1>
+    </div>
+  </div>
+  <section>
+    <div class="container">
+      <div class="about-content">
+        <p style="font-size:1.05rem;color:var(--text2);line-height:1.8;margin-bottom:2rem">
+          DEFTECH is India's premier online educational portal dedicated to defence education and technology. 
+          We bridge the gap between classified military operations and civilian understanding — offering 
+          structured, accurate, and engaging content for students, researchers, and professionals.
+        </p>
+        <p style="font-size:.92rem;color:var(--text2);line-height:1.8">
+          Our platform covers DRDO research, missile systems, radar technology, military rank structures, 
+          and the future of Indian defence innovation — all curated by defence enthusiasts and subject-matter experts.
+        </p>
+      </div>
+      <div class="about-grid">
+        <div class="about-card">
+          <h3>🎯 Our Mission</h3>
+          <p>To democratize knowledge about India's defence ecosystem and empower the next generation of defence professionals, researchers, and informed citizens.</p>
+        </div>
+        <div class="about-card">
+          <h3>🛡️ Our Vision</h3>
+          <p>A nation where every citizen understands and appreciates the technological prowess and strategic depth of India's armed forces and defence research.</p>
+        </div>
+        <div class="about-card">
+          <h3>📖 Our Content</h3>
+          <p>Rigorously researched, publicly available information structured into digestible learning modules with interactive assessments and progress tracking.</p>
+        </div>
+        <div class="about-card">
+          <h3>🔬 DRDO Focus</h3>
+          <p>Special emphasis on DRDO's landmark programmes — Agni, Prithvi, BrahMos, AESA radar, ATAGS howitzer, and emerging defence technologies.</p>
+        </div>
+      </div>
+      <div style="margin-top:3rem">
+        <div class="section-label">India's Defence Journey</div>
+        <h2 class="section-title mt1">Key <span class="text-green">Milestones</span></h2>
+        <div class="timeline mt2">
+          <div class="timeline-item">
+            <div class="timeline-dot">🚀</div>
+            <div class="timeline-content">
+              <div class="timeline-year">1958</div>
+              <h4>DRDO Established</h4>
+              <p>Defence Research and Development Organisation founded to drive self-reliance in defence technology.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">☢️</div>
+            <div class="timeline-content">
+              <div class="timeline-year">1998</div>
+              <h4>Pokhran-II Nuclear Tests</h4>
+              <p>Operation Shakti — India demonstrated thermonuclear and fission device capability, ushering in a new strategic era.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">🎯</div>
+            <div class="timeline-content">
+              <div class="timeline-year">2001</div>
+              <h4>BrahMos Missile</h4>
+              <p>Joint India-Russia supersonic cruise missile — the world's fastest operational cruise missile at Mach 2.8.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">⭐</div>
+            <div class="timeline-content">
+              <div class="timeline-year">2019</div>
+              <h4>Mission Shakti – ASAT Test</h4>
+              <p>India became the 4th country to demonstrate anti-satellite missile capability, shooting down a live satellite in LEO.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot">✈️</div>
+            <div class="timeline-content">
+              <div class="timeline-year">2024+</div>
+              <h4>AMCA & Future Systems</h4>
+              <p>Advanced Medium Combat Aircraft, FINSAS, directed energy weapons, and hypersonic glide vehicles under development.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+
+const COURSES = [
+  {
+    id:'military-rank',
+    title:'Military Rank Structure',
+    category:'Defence Basics',
+    emoji:'🎖️',
+    bannerColor:'linear-gradient(135deg,#0d2219,#1a4a30)',
+    difficulty:'Beginner',
+    modules:3,time:45,
+    desc:'Master the complete rank hierarchy across India\'s Army, Navy, and Air Force. Understand the chain of command, insignia, and responsibilities at each level.',
+    longDesc:'This foundational course covers the complete rank structure of the Indian Armed Forces — Army, Navy, and Indian Air Force. Learn the insignia, pay grades, appointment titles, and the operational command structure from sepoy to Field Marshal.',
+    moduleList:[
+      {title:'Army Ranks — Commissioned & Non-Commissioned',sub:'Junior Commissioned Officers to Field Marshal'},
+      {title:'Navy & Air Force Rank Equivalents',sub:'Cross-service rank mapping and joint operations'},
+      {title:'Command Structure & Chain of Authority',sub:'How orders flow from MoD to battlefield'},
+    ]
+  },
+  {
+    id:'drdo-overview',
+    title:'DRDO Overview',
+    category:'Defence Research',
+    emoji:'🔬',
+    bannerColor:'linear-gradient(135deg,#0d1a22,#1a3a4a)',
+    difficulty:'Intermediate',
+    modules:4,time:60,
+    desc:'Deep dive into India\'s Defence Research and Development Organisation — its labs, flagship programmes, export milestones, and vision for Atmanirbhar Bharat.',
+    longDesc:'DRDO is the R&D backbone of Indian defence. This course covers its organizational structure, cluster of 52 labs, flagship weapon programmes (Agni, Arjun, Tejas), Make in India push, and emerging research areas including AI, directed energy, and quantum.',
+    moduleList:[
+      {title:'DRDO — History, Structure & Mandate',sub:'52 laboratories and their specializations'},
+      {title:'Flagship Programmes — Missiles & Aircraft',sub:'Agni, Prithvi, Tejas LCA development'},
+      {title:'Arjun Tank & Land Systems',sub:'MBT Arjun, infantry systems, artillery'},
+      {title:'Atmanirbhar Bharat & Export Vision',sub:'Defence exports and future roadmap'},
+    ]
+  },
+  {
+    id:'missile-tech',
+    title:'Missile Technology Basics',
+    category:'Space & Missiles',
+    emoji:'🚀',
+    bannerColor:'linear-gradient(135deg,#1a0d22,#3a1a4a)',
+    difficulty:'Intermediate',
+    modules:5,time:75,
+    desc:'Explore the science and strategy behind India\'s missile arsenal — from Agni-V to BrahMos hypersonic. Covers propulsion, guidance, warhead types, and deterrence.',
+    longDesc:'From solid-fueled ballistic missiles to hypersonic glide vehicles, this course demystifies missile technology. Learn propulsion physics, inertial navigation, terminal guidance, re-entry vehicle design, and how India\'s Integrated Guided Missile Development Programme shaped its strategic deterrence.',
+    moduleList:[
+      {title:'Missile Physics — Propulsion & Trajectories',sub:'Solid vs liquid propellant, burn stages'},
+      {title:'IGMDP — India\'s Missile Programme',sub:'Agni, Prithvi, Akash, Trishul, Nag'},
+      {title:'BrahMos — Supersonic Cruise Missile',sub:'India-Russia collaboration and Mach 2.8 technology'},
+      {title:'Guidance Systems & Warhead Technology',sub:'INS, GPS, terminal homing, CEP'},
+      {title:'Strategic Deterrence & Missile Defence',sub:'Nuclear triad, BMDS, S-400 integration'},
+    ]
+  },
+  {
+    id:'radar-systems',
+    title:'Radar Systems',
+    category:'Electronics & Surveillance',
+    emoji:'📡',
+    bannerColor:'linear-gradient(135deg,#0a1a0d,#1a3020)',
+    difficulty:'Advanced',
+    modules:4,time:60,
+    desc:'Technical deep dive into radar engineering — AESA, PESA, phased arrays, electronic warfare, and India\'s radar development including the Uttam AESA programme.',
+    longDesc:'Radar is the invisible backbone of modern defence. This advanced course covers electromagnetic wave principles, pulse vs continuous wave radar, phased array antenna theory, AESA vs PESA architectures, low-probability-of-intercept (LPI) design, and electronic countermeasures. Case studies on India\'s Uttam AESA radar and Rohini battlefield surveillance radar.',
+    moduleList:[
+      {title:'Electromagnetic Fundamentals & Radar Basics',sub:'RF propagation, reflection, Doppler'},
+      {title:'Phased Array Architecture — PESA & AESA',sub:'Beam steering, T/R modules, bandwidth'},
+      {title:'India\'s Radar Programmes — Uttam & Rohini',sub:'DRDO radar development milestones'},
+      {title:'Electronic Warfare & Counter-Radar',sub:'EW, jamming, LPI, stealth detection'},
+    ]
+  },
+  {
+    id:'defence-innovation',
+    title:'Defence Innovation & Future Tech',
+    category:'Innovation',
+    emoji:'⚡',
+    bannerColor:'linear-gradient(135deg,#1a1a0d,#3a3a1a)',
+    difficulty:'Advanced',
+    modules:3,time:50,
+    desc:'The cutting edge — AI in warfare, autonomous systems, hypersonic weapons, directed energy, AMCA stealth fighter, FINSAS soldier system, and quantum technologies.',
+    longDesc:'India\'s defence future is being written today. This course surveys the most transformative emerging technologies — AI-enabled autonomous drones, swarm warfare, directed energy weapons (DEW), hypersonic glide vehicles, quantum communication, the AMCA 5th-generation stealth fighter, and the FINSAS (Future Infantry Soldier as a System) modernization programme.',
+    moduleList:[
+      {title:'AI, Autonomy & Drone Swarms',sub:'UAV swarms, loitering munitions, AI targeting'},
+      {title:'Hypersonic & Directed Energy Weapons',sub:'HGV technology, LASER, RAILGUN programmes'},
+      {title:'AMCA, FINSAS & Future Platforms',sub:'5th-gen fighter, smart soldier, space assets'},
+    ]
+  }
+];
+
+const QUIZZES = {
+  'military-rank':[
+    {q:'What is the highest rank in the Indian Army?',opts:['General','Field Marshal','Lieutenant General','Chief of Army Staff'],ans:1,
+     exp:'Field Marshal is the highest rank in the Indian Army — a 5-star rank awarded only during wartime or for extraordinary service. Only two officers have held it: Kodandera Madappa Cariappa and Sam Manekshaw.'},
+    {q:'Which rank in the Indian Air Force is equivalent to a General in the Army?',opts:['Air Marshal','Air Chief Marshal','Air Vice Marshal','Wing Commander'],ans:1,
+     exp:'Air Chief Marshal is a 4-star rank equivalent to General in the Indian Army. The Chief of Air Staff holds this rank.'},
+    {q:'What does "JCO" stand for in the Indian Army?',opts:['Junior Combat Officer','Joint Command Officer','Junior Commissioned Officer','Joint Corps Officer'],ans:2,
+     exp:'JCO — Junior Commissioned Officer — is a rank between a non-commissioned officer (NCO) and a commissioned officer. Examples include Naib Subedar, Subedar, and Subedar Major.'},
+    {q:'Which naval rank is equivalent to a Brigadier in the Army?',opts:['Commodore','Captain','Rear Admiral','Commander'],ans:0,
+     exp:'Commodore (one-star) in the Indian Navy is equivalent to Brigadier (one-star) in the Indian Army.'},
+    {q:'The rank of "Sepoy" in the Indian Army is equivalent to which Air Force rank?',opts:['Flying Officer','Aircraftman','Corporal','Leading Aircraftman'],ans:1,
+     exp:'Aircraftman (AC) is the lowest enlisted rank in the Indian Air Force, equivalent to Sepoy in the Army and Seaman 2nd Class in the Navy.'},
+  ],
+  'drdo-overview':[
+    {q:'When was DRDO established?',opts:['1948','1958','1962','1971'],ans:1,
+     exp:'DRDO (Defence Research and Development Organisation) was established in 1958 by merging the Technical Development Establishment of the Indian Army with the Directorate of Technical Development & Production.'},
+    {q:'Which DRDO programme produced the Tejas Light Combat Aircraft?',opts:['IGMDP','ADA-HAL LCA Programme','AMCA','GTRE GTX-35VS'],ans:1,
+     exp:'The Tejas LCA was developed by Aeronautical Development Agency (ADA) with HAL as the production agency — under what is known as the LCA Programme, not part of IGMDP.'},
+    {q:'How many laboratories does DRDO operate across India?',opts:['32','41','52','67'],ans:2,
+     exp:'DRDO operates a network of 52 laboratories and establishments spread across India, employing over 30,000 scientists and staff across disciplines ranging from electronics to materials science.'},
+    {q:'What does IGMDP stand for?',opts:['Integrated Guided Missile Defence Programme','Indian Government Missile Development Project','Integrated Guided Missile Development Programme','Indo-Government Military Defence Programme'],ans:2,
+     exp:'IGMDP — Integrated Guided Missile Development Programme — was launched in 1983 under Dr. A.P.J. Abdul Kalam to develop Agni, Prithvi, Akash, Trishul, and Nag missiles.'},
+  ],
+  'missile-tech':[
+    {q:'What is the approximate range of the Agni-V ballistic missile?',opts:['1,500 km','3,500 km','5,000+ km','800 km'],ans:2,
+     exp:'Agni-V is India\'s intercontinental ballistic missile (ICBM) with a range exceeding 5,000 km, making it capable of reaching targets across Asia and parts of Europe.'},
+    {q:'BrahMos is a joint venture between India and which country?',opts:['France','Israel','Russia','USA'],ans:2,
+     exp:'BrahMos is a joint venture between DRDO (India) and NPO Mashinostroyenia (Russia). The name is derived from Brahmaputra and Moskva rivers.'},
+    {q:'Which propulsion type does the Agni series primarily use?',opts:['Liquid propellant','Solid propellant','Hybrid propellant','Ram jet'],ans:1,
+     exp:'The Agni series of ballistic missiles uses solid propellant motors, which offer advantages of quick launch readiness, storage safety, and lower maintenance compared to liquid-fueled systems.'},
+    {q:'What is the approximate maximum speed of the BrahMos missile?',opts:['Mach 1.2','Mach 2.8','Mach 4','Mach 0.9'],ans:1,
+     exp:'BrahMos travels at approximately Mach 2.8 (about 3,400 km/h), making it the world\'s fastest operational supersonic cruise missile. The hypersonic variant (BrahMos-II) is under development.'},
+    {q:'What does "CEP" stand for in missile guidance?',opts:['Circular Error Probable','Combat Engagement Point','Cruise Engine Power','Central Explosive Payload'],ans:0,
+     exp:'CEP — Circular Error Probable — is a measure of guidance accuracy. It is the radius of a circle within which 50% of missiles will land when aimed at the center. A lower CEP means higher accuracy.'},
+  ],
+  'radar-systems':[
+    {q:'What does AESA stand for in radar terminology?',opts:['Active Electronically Scanned Array','Advanced Electronic Surveillance Apparatus','Automated Electronic Signal Array','Active Energy Scanning Antenna'],ans:0,
+     exp:'AESA — Active Electronically Scanned Array — uses thousands of individual Transmit/Receive (T/R) modules, each with its own amplifier. This allows simultaneous multi-function operation and much greater reliability than PESA.'},
+    {q:'What is the primary advantage of a phased array radar over a mechanically steered radar?',opts:['Lower cost','Faster beam steering with no moving parts','Longer range only','Smaller physical size'],ans:1,
+     exp:'Phased array radars steer the beam electronically at nearly the speed of light, enabling them to track multiple targets simultaneously and switch functions (search, track, guidance) in microseconds — impossible with mechanical steering.'},
+    {q:'India\'s indigenous AESA radar for the Tejas Mk2 is called:',opts:['Rohini','Uttam','Indra','Phalcon'],ans:1,
+     exp:'Uttam is the AESA fire-control radar being developed by DRDO\'s Electronics & Radar Development Establishment (LRDE) for the Tejas Mk2 and other aircraft. Phalcon is an Israeli AEW&C system.'},
+    {q:'What does "LPI" mean in radar electronic warfare?',opts:['Low Power Interface','Long Period Intercept','Low Probability of Intercept','Laser Pulse Integration'],ans:2,
+     exp:'LPI — Low Probability of Intercept — refers to radar waveform design techniques (frequency hopping, spread spectrum, low peak power) that make it difficult for enemy ESM systems to detect the radar\'s emissions.'},
+  ],
+  'defence-innovation':[
+    {q:'What does AMCA stand for in Indian defence?',opts:['Advanced Military Combat Aircraft','Advanced Medium Combat Aircraft','Aerial Multi-Combat Asset','Autonomous Military Combat Asset'],ans:1,
+     exp:'AMCA — Advanced Medium Combat Aircraft — is India\'s indigenous 5th-generation stealth fighter being developed by ADA and HAL. It will feature stealth shaping, AESA radar, supercruise capability, and internal weapons bays.'},
+    {q:'What is a "loitering munition"?',opts:['A cruise missile that circles an area before striking','A drone that can loiter then be recalled','An unmanned aerial vehicle that can loiter over a target area and attack when a target is identified','A slow-flying bomber'],ans:2,
+     exp:'A loitering munition (also called "suicide drone" or "kamikaze drone") is a weapon system that loiters over a target area, autonomously or semi-autonomously identifies a target, and then dives into it to detonate. Examples: Harop (Israel), Switchblade (USA).'},
+    {q:'FINSAS stands for:',opts:['Future Infantry Soldier as a System','Forward Infantry Network and Surveillance','Fast Infantry Netting & Assault System','Future Integrated Naval Soldier Armament System'],ans:0,
+     exp:'FINSAS — Future Infantry Soldier as a System — is India\'s programme to modernize the individual infantry soldier with integrated communication, navigation, night vision, body armor, smart weapons, and real-time battlefield networking.'},
+  ],
+};
+
+// ── STATE ──────────────────────────────────────────────────
+let state = JSON.parse(localStorage.getItem('deftech_state') || 'null') || {
+  completedCourses:[],
+  quizScores:{},
+  moduleProgress:{},
+  achievements:[]
+};
+let currentCourse = null;
+let currentQuiz = {questions:[],idx:0,answers:[],answered:false};
+
+function saveState(){localStorage.setItem('deftech_state',JSON.stringify(state))}
+
+// ── NAVIGATION ─────────────────────────────────────────────
+function goPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav-links a[data-page]').forEach(a=>{
+    a.classList.toggle('active',a.dataset.page===page);
+  });
+  window.scrollTo(0,0);
+  if(page==='courses')renderCourses();
+  if(page==='dashboard')renderDashboard();
+  if(page==='home')renderHomePreview();
+  // close mobile menu
+  document.getElementById('nav-links').classList.remove('open');
+}
+
+function toggleMenu(){
+  document.getElementById('nav-links').classList.toggle('open');
+}
+function logout(){
+  if(confirm('Log out of DEFTECH?')){alert('Logged out. Thank you for learning with DEFTECH!')}
+}
+
+// ── COURSE CARD BUILDER ────────────────────────────────────
+function diffBadge(d){
+  const cls={Beginner:'diff-beginner',Intermediate:'diff-intermediate',Advanced:'diff-advanced'}[d]||'diff-beginner';
+  const dot={Beginner:'🟢',Intermediate:'🟡',Advanced:'🔵'}[d]||'⚪';
+  return `<span class="difficulty ${cls}">${dot} ${d}</span>`;
+}
+
+function courseCardHTML(c){
+  const prog = state.moduleProgress[c.id]||0;
+  const pct = Math.round((prog/c.modules)*100);
+  const score = state.quizScores[c.id];
+  const done = state.completedCourses.includes(c.id);
+  return `
+  <div class="course-card" onclick="openCourse('${c.id}')">
+    <div class="course-card-banner" style="background:${c.bannerColor}">
+      <div style="font-size:3.5rem;opacity:.7">${c.emoji}</div>
+      ${done?'<div style="position:absolute;top:10px;right:10px;background:rgba(0,255,136,.2);border:1px solid rgba(0,255,136,.4);border-radius:20px;padding:.2rem .6rem;font-family:var(--font-mono);font-size:.6rem;color:var(--green)">✓ COMPLETE</div>':''}
+    </div>
+    <div class="course-card-body">
+      <div class="course-category">${c.category}</div>
+      <div class="course-title">${c.title}</div>
+      <div class="course-desc">${c.desc}</div>
+      ${pct>0?`<div style="margin-bottom:.75rem">
+        <div style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--text3);font-family:var(--font-mono);margin-bottom:.3rem"><span>Progress</span><span>${pct}%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+      </div>`:''}
+      <div class="course-meta">
+        ${diffBadge(c.difficulty)}
+        <span class="meta-item"><span>📦</span>${c.modules} Modules</span>
+        <span class="meta-item"><span>⏱️</span>${c.time} min</span>
+        ${score!==undefined?`<span class="meta-item text-green"><span>🎯</span>${score}%</span>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ── HOME PREVIEW ───────────────────────────────────────────
+function renderHomePreview(){
+  const el=document.getElementById('home-courses-preview');
+  if(el)el.innerHTML=COURSES.slice(0,3).map(courseCardHTML).join('');
+}
+
+// ── COURSES PAGE ───────────────────────────────────────────
+let filteredCourses=[...COURSES];
+function renderCourses(list=filteredCourses){
+  document.getElementById('courses-grid').innerHTML=list.length?list.map(courseCardHTML).join(''):'<p style="color:var(--text3);grid-column:1/-1;text-align:center;padding:3rem">No courses match your filter.</p>';
+}
+function filterCourses(val,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  filteredCourses=val==='all'?[...COURSES]:COURSES.filter(c=>c.difficulty===val||c.category.includes(val));
+  renderCourses();
+}
+function searchCourses(val){
+  const v=val.toLowerCase();
+  renderCourses(COURSES.filter(c=>c.title.toLowerCase().includes(v)||c.category.toLowerCase().includes(v)||c.desc.toLowerCase().includes(v)));
+}
+
+// ── COURSE DETAIL ──────────────────────────────────────────
+function openCourse(id){
+  currentCourse=COURSES.find(c=>c.id===id);
+  const c=currentCourse;
+  const prog=state.moduleProgress[c.id]||0;
+
+  document.getElementById('detail-title').textContent=c.title;
+  document.getElementById('detail-desc').textContent=c.longDesc;
+  document.getElementById('detail-badges').innerHTML=`
+    ${diffBadge(c.difficulty)}
+    <span class="meta-item" style="font-family:var(--font-mono);font-size:.65rem;color:var(--text3)">📦 ${c.modules} Modules</span>
+    <span class="meta-item" style="font-family:var(--font-mono);font-size:.65rem;color:var(--text3)">⏱️ ${c.time} min</span>
+    <span class="meta-item" style="font-family:var(--font-mono);font-size:.65rem;color:var(--text3)">📂 ${c.category}</span>`;
+
+  document.getElementById('detail-sidebar-stats').innerHTML=`
+    <div class="sidebar-stat"><span class="sidebar-stat-label">Modules</span><span class="sidebar-stat-val">${c.modules}</span></div>
+    <div class="sidebar-stat"><span class="sidebar-stat-label">Duration</span><span class="sidebar-stat-val">${c.time} min</span></div>
+    <div class="sidebar-stat"><span class="sidebar-stat-label">Difficulty</span><span class="sidebar-stat-val">${c.difficulty}</span></div>
+    <div class="sidebar-stat"><span class="sidebar-stat-label">Progress</span><span class="sidebar-stat-val text-green">${Math.round((prog/c.modules)*100)}%</span></div>
+    ${state.quizScores[c.id]!==undefined?`<div class="sidebar-stat"><span class="sidebar-stat-label">Quiz Score</span><span class="sidebar-stat-val text-green">${state.quizScores[c.id]}%</span></div>`:''}`;
+
+  document.getElementById('module-list').innerHTML=c.moduleList.map((m,i)=>{
+    let statusCls='status-locked',statusTxt='Locked';
+    if(i<prog){statusCls='status-complete';statusTxt='✓ Complete'}
+    else if(i===prog){statusCls='status-active';statusTxt='▶ Current'}
+    return `<div class="module-item" onclick="completeModule(${i})">
+      <div class="module-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="module-info">
+        <div class="module-title">${m.title}</div>
+        <div class="module-sub">${m.sub}</div>
+      </div>
+      <span class="module-status ${statusCls}">${statusTxt}</span>
+    </div>`;
+  }).join('');
+
+  goPage('course-detail');
+}
+
+function completeModule(idx){
+  const c=currentCourse;
+  const prog=state.moduleProgress[c.id]||0;
+  if(idx===prog){
+    state.moduleProgress[c.id]=prog+1;
+    if(state.moduleProgress[c.id]>=c.modules&&!state.completedCourses.includes(c.id)){
+      state.completedCourses.push(c.id);
+      checkAchievements();
+      setTimeout(()=>alert(`🎉 Course "${c.title}" Complete! All modules finished. Take the quiz to test your knowledge!`),100);
+    }
+    saveState();
+    openCourse(c.id);
+  }
+}
+
+// ── QUIZ ───────────────────────────────────────────────────
+function startQuiz(){
+  if(!currentCourse)return;
+  const qs=QUIZZES[currentCourse.id];
+  if(!qs){alert('Quiz coming soon for this course!');return}
+  currentQuiz={questions:shuffle([...qs]),idx:0,answers:[],answered:false};
+  document.getElementById('quiz-course-title').textContent=currentCourse.title;
+  renderQuestion();
+  goPage('quiz');
+}
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}
+  return arr;
+}
+
+function renderQuestion(){
+  const {questions,idx}=currentQuiz;
+  if(idx>=questions.length){showScore();return}
+  const q=questions[idx];
+  const total=questions.length;
+  document.getElementById('quiz-counter').textContent=`${idx+1} / ${total}`;
+  document.getElementById('quiz-progress-fill').style.width=`${(idx/total)*100}%`;
+  currentQuiz.answered=false;
+  document.getElementById('quiz-content').innerHTML=`
+    <div class="question-card">
+      <div class="question-num">QUESTION ${idx+1} OF ${total}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((o,i)=>`
+          <div class="option" id="opt-${i}" onclick="selectOption(${i})">
+            <span class="option-letter">${String.fromCharCode(65+i)}</span>
+            ${o}
+          </div>`).join('')}
+      </div>
+      <div id="feedback"></div>
+      <div class="quiz-nav" id="quiz-nav" style="display:none">
+        <button class="btn-primary" onclick="nextQuestion()">${idx+1<total?'Next Question →':'See Results'}</button>
+      </div>
+    </div>`;
+}
+
+function selectOption(i){
+  if(currentQuiz.answered)return;
+  currentQuiz.answered=true;
+  const q=currentQuiz.questions[currentQuiz.idx];
+  const correct=i===q.ans;
+  currentQuiz.answers.push(correct);
+
+  document.querySelectorAll('.option').forEach((el,j)=>{
+    el.classList.add('disabled');
+    if(j===q.ans)el.classList.add('correct');
+    else if(j===i)el.classList.add('wrong');
+  });
+
+  document.getElementById('feedback').innerHTML=`
+    <div class="feedback-box ${correct?'feedback-correct':'feedback-wrong'}">
+      ${correct?'✅ Correct!':'❌ Incorrect.'} ${q.exp}
+    </div>`;
+  document.getElementById('quiz-nav').style.display='flex';
+}
+
+function nextQuestion(){
+  currentQuiz.idx++;
+  renderQuestion();
+}
+
+function showScore(){
+  const {answers,questions}=currentQuiz;
+  const score=Math.round((answers.filter(Boolean).length/questions.length)*100);
+  const c=currentCourse;
+
+  if(!state.quizScores[c.id]||score>state.quizScores[c.id])state.quizScores[c.id]=score;
+  if(!state.moduleProgress[c.id])state.moduleProgress[c.id]=c.modules;
+  if(!state.completedCourses.includes(c.id))state.completedCourses.push(c.id);
+
+  // Quiz history
+  if(!state.quizHistory)state.quizHistory=[];
+  state.quizHistory.unshift({course:c.title,score,date:new Date().toLocaleDateString()});
+  if(state.quizHistory.length>10)state.quizHistory=state.quizHistory.slice(0,10);
+
+  checkAchievements();
+  saveState();
+
+  document.getElementById('quiz-progress-fill').style.width='100%';
+  let grade='',badgeHtml='';
+  if(score>=90){grade='Distinction';badgeHtml='<span class="badge badge-gold">🏆 Distinction</span>'}
+  else if(score>=70){grade='Merit';badgeHtml='<span class="badge badge-green">⭐ Merit</span>'}
+  else{grade='Pass';badgeHtml='<span class="badge badge-cyan">📘 Completed</span>'}
+
+  document.getElementById('quiz-content').innerHTML=`
+    <div class="score-card">
+      <div class="section-label" style="justify-content:center">Quiz Complete</div>
+      <h2 style="font-family:var(--font-display);font-size:1.2rem;font-weight:700;margin-top:.5rem">${c.title}</h2>
+      <div class="score-circle">
+        <div class="score-num">${score}%</div>
+        <div class="score-label">${grade}</div>
+      </div>
+      <p style="color:var(--text2);font-size:.88rem;margin-bottom:.5rem">
+        ${answers.filter(Boolean).length} / ${questions.length} correct answers
+      </p>
+      <div class="score-badges">${badgeHtml}<span class="badge badge-cyan">📊 Score Saved</span></div>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem">
+        <button class="btn-primary" onclick="goPage('dashboard')">View Dashboard</button>
+        <button class="btn-secondary" onclick="startQuiz()">Retake Quiz</button>
+        <button class="btn-secondary" onclick="goPage('courses')">More Courses</button>
+      </div>
+    </div>`;
+}
+
+// ── DASHBOARD ──────────────────────────────────────────────
+function renderDashboard(){
+  const total=COURSES.length;
+  const done=state.completedCourses.length;
+  const scores=Object.values(state.quizScores);
+  const avgScore=scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):0;
+  const totalMods=COURSES.reduce((a,c)=>a+(state.moduleProgress[c.id]||0),0);
+
+  document.getElementById('dash-stats').innerHTML=`
+    <div class="dash-stat-card"><div class="dash-stat-num">${done}/${total}</div><div class="dash-stat-label">Courses Completed</div></div>
+    <div class="dash-stat-card" style="border-left-color:var(--amber)"><div class="dash-stat-num" style="color:var(--amber)">${scores.length}</div><div class="dash-stat-label">Quizzes Taken</div></div>
+    <div class="dash-stat-card" style="border-left-color:var(--cyan)"><div class="dash-stat-num" style="color:var(--cyan)">${avgScore}%</div><div class="dash-stat-label">Average Score</div></div>
+    <div class="dash-stat-card" style="border-left-color:var(--green2)"><div class="dash-stat-num">${totalMods}</div><div class="dash-stat-label">Modules Finished</div></div>`;
+
+  document.getElementById('dash-progress').innerHTML=COURSES.map(c=>{
+    const prog=state.moduleProgress[c.id]||0;
+    const pct=Math.round((prog/c.modules)*100);
+    return `<div class="progress-row">
+      <div class="progress-row-header"><span>${c.emoji} ${c.title}</span><span>${pct}%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  const hist=state.quizHistory||[];
+  document.getElementById('dash-quiz-history').innerHTML=hist.length?
+    hist.map(h=>`<div class="quiz-history-row">
+      <span style="font-size:.82rem;color:var(--text2)">${h.course}</span>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:.2rem">
+        <span class="quiz-history-score">${h.score}%</span>
+        <span class="text-mono" style="font-size:.6rem;color:var(--text3)">${h.date}</span>
+      </div>
+    </div>`).join('')
+    :'<p style="color:var(--text3);font-size:.85rem">No quizzes taken yet. Start a course!</p>';
+
+  const allAchievements=[
+    {id:'first_course',icon:'🎖️',name:'First Steps',cond:done>=1},
+    {id:'all_courses',icon:'🏆',name:'Defence Scholar',cond:done>=5},
+    {id:'perfect_quiz',icon:'⭐',name:'Sharpshooter',cond:scores.some(s=>s===100)},
+    {id:'high_avg',icon:'🎯',name:'Top Analyst',cond:avgScore>=80},
+    {id:'first_quiz',icon:'📝',name:'Quiz Cadet',cond:scores.length>=1},
+    {id:'three_quizzes',icon:'🔬',name:'Research Officer',cond:scores.length>=3},
+    {id:'all_quizzes',icon:'🌟',name:'Grand Commander',cond:scores.length>=5},
+    {id:'missile_done',icon:'🚀',name:'Rocket Scientist',cond:!!state.quizScores['missile-tech']},
+  ];
+  document.getElementById('dash-achievements').innerHTML=allAchievements.map(a=>`
+    <div class="achievement ${a.cond?'':'locked'}">
+      <div style="font-size:1.8rem">${a.icon}</div>
+      <p>${a.name}</p>
+    </div>`).join('');
+}
+
+function checkAchievements(){
+
+}
+
+
+renderHomePreview();
+</script>
+</body>
+</html>
