@@ -474,6 +474,9 @@ function serializeProgress(prog) {
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+app.get('/', (req, res) => {
+  res.send('🚀 DEFTECH API is running!');
+});
 
 // ═══════════════════════════════════════════════════════════
 //  CONNECT TO MONGODB + START SERVER
