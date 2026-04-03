@@ -74,9 +74,7 @@ const progressSchema = new mongoose.Schema({
 
 const Progress = mongoose.model('Progress', progressSchema);
 
-// ═══════════════════════════════════════════════════════════
-//  STATIC COURSE + QUIZ DATA  (JSON — no DB needed for these)
-// ═══════════════════════════════════════════════════════════
+
 const COURSES = [
   {
     id: 'military-rank', title: 'Military Rank Structure',
